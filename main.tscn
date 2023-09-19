@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0i261cp1ugkh"]
+[gd_scene load_steps=7 format=3 uid="uid://b0i261cp1ugkh"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_6ke6x"]
 [ext_resource type="Texture2D" uid="uid://dafsi3dqavgnb" path="res://Untitled.png" id="2_w1il1"]
+[ext_resource type="PackedScene" uid="uid://dkbgu7ghl048y" path="res://Enemy.tscn" id="3_geuud"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fs1q0"]
 size = Vector2(10, 10)
@@ -9,7 +10,7 @@ size = Vector2(10, 10)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tqqca"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_my1x2"]
-size = Vector2(12, 12)
+size = Vector2(14, 14)
 
 [node name="World" type="Node2D"]
 
@@ -33,3 +34,8 @@ offset = Vector2(45.275, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
 shape = SubResource("RectangleShape2D_my1x2")
+
+[node name="Enemy" parent="." instance=ExtResource("3_geuud")]
+position = Vector2(246, 135)
+
+[connection signal="body_entered" from="Player/Area2D" to="Player" method="_on_area_2d_body_entered"]

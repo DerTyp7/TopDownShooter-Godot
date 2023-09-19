@@ -19,10 +19,10 @@ func _on_shoot_timer_timeout():
 
 func _physics_process(delta):
 	look()
-	move()
+	move(delta)
 		
-	if Input.is_action_pressed("shoot"):
-		shoot()
+#	if Input.is_action_pressed("shoot"):
+#		shoot()
 
 func shoot():
 	if can_shoot:
@@ -41,6 +41,7 @@ func look():
 		look_direction.x -= 1
 	if Input.is_action_pressed("look_right"):
 		look_direction.x += 1
+			
 	
 	# Diagonal look
 	if Input.is_action_pressed("look_up") && Input.is_action_pressed("look_left"):
@@ -55,8 +56,11 @@ func look():
 	if look_direction != Vector2.ZERO:
 		look_direction = look_direction.normalized()
 		rotation = look_direction.angle()
-
-func move():
+	
+	if Input.is_action_pressed("look_up") || Input.is_action_pressed("look_down") || Input.is_action_pressed("look_left") || Input.is_action_pressed("look_right"):
+		shoot();	
+		
+func move(delta):
 	velocity = Vector2.ZERO
 	
 	if Input.is_action_pressed("walk_up"):
@@ -71,14 +75,14 @@ func move():
 	velocity = velocity.normalized() * movespeed
 	
 	move_and_slide()
-
+	velocity.lerp(Vector2.ZERO, 0.1)
 		
 func fire():
 	var bullet_instance = bullet.instantiate()  # Create an instance of the bullet
 	var offset = Vector2(20, 0).rotated(rotation)  # Adjust the offset as needed
 	bullet_instance.position = global_position + offset
 	bullet_instance.rotation_degrees = rotation_degrees
-	
+	bullet_instance.name = "Bullet " + str(randf())
 	# Calculate the bullet direction based on the player's rotation
 	var bullet_direction = Vector2(bullet_speed, 0).rotated(rotation)
 	
@@ -89,3 +93,11 @@ func fire():
 	get_tree().get_root().call_deferred("add_child", bullet_instance)
 
 
+func kill():
+	print("kill")
+	get_tree().reload_current_scene()
+
+
+func _on_area_2d_body_entered(body):
+	if "Enemy" in body.name:
+		kill()

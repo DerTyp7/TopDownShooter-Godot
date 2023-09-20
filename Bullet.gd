@@ -9,5 +9,15 @@ func _ready():
 	destroy_timer.start()
 	destroy_timer.connect("timeout", _on_destroy_timer_timeout)
 	
+
+	
 func _on_destroy_timer_timeout():
 	queue_free()
+
+
+
+#func _on_body_entered(body):
+#	print("---------------")
+#	print(body.name)
+#	if "Bullet" not in body.name:
+#		queue_free()

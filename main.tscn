@@ -2,17 +2,22 @@
 
 [ext_resource type="Script" path="res://Player.gd" id="1_6ke6x"]
 [ext_resource type="Texture2D" uid="uid://dafsi3dqavgnb" path="res://Untitled.png" id="2_w1il1"]
-[ext_resource type="PackedScene" uid="uid://dkbgu7ghl048y" path="res://Enemy.tscn" id="3_geuud"]
+[ext_resource type="PackedScene" uid="uid://drc844kmvl3xa" path="res://Enemy_spawner.tscn" id="4_vhwqp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fs1q0"]
 size = Vector2(10, 10)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tqqca"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_my1x2"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1cb75"]
 size = Vector2(14, 14)
 
 [node name="World" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+
+[node name="EnemySpawner" parent="." instance=ExtResource("4_vhwqp")]
 
 [node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("1_6ke6x")
@@ -33,9 +38,6 @@ offset = Vector2(45.275, 0)
 [node name="Area2D" type="Area2D" parent="Player"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
-shape = SubResource("RectangleShape2D_my1x2")
-
-[node name="Enemy" parent="." instance=ExtResource("3_geuud")]
-position = Vector2(246, 135)
+shape = SubResource("RectangleShape2D_1cb75")
 
 [connection signal="body_entered" from="Player/Area2D" to="Player" method="_on_area_2d_body_entered"]

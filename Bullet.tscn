@@ -1,13 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://day7or3kp8x5u"]
+[gd_scene load_steps=5 format=3 uid="uid://day7or3kp8x5u"]
 
 [ext_resource type="Script" path="res://Bullet.gd" id="1_0l6ar"]
 [ext_resource type="Texture2D" uid="uid://dafsi3dqavgnb" path="res://Untitled.png" id="1_cjg2r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_suj8m"]
-size = Vector2(8, 8)
+size = Vector2(4, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uncb7"]
+size = Vector2(6, 6)
 
 [node name="Bullet" type="RigidBody2D"]
 gravity_scale = 0.0
+continuous_cd = 1
 script = ExtResource("1_0l6ar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -17,3 +21,10 @@ shape = SubResource("RectangleShape2D_suj8m")
 position = Vector2(-2.38419e-07, -2.38419e-07)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_cjg2r")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_uncb7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
